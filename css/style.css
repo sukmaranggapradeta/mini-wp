@@ -1,0 +1,52 @@
+*{
+    overflow-x: hidden;
+    margin: 0;
+    padding:0;
+   }
+
+#sidebar-wrapper{
+    overflow-y: auto;
+    /* width: 100%; */
+    height: 78vh;
+    overflow-x: hidden;
+   }
+
+   ul li a img {
+       height: 20px;
+   }
+   ul a{
+       margin-top:10px;
+       margin-left:10px;
+   }
+
+   .fas, .far{
+       color:white;
+       font-size:22px;
+   }
+
+   .searching{
+    justify-content: flex-end;
+   }
+
+   .blog-post{
+       margin-top:30px;
+   }
+
+   .container-artikel{
+       margin:10px;
+   }
+   input{
+       margin-top: 10px;
+   }
+
+   h2{
+    font-family: 'Monoton', sans-serif;;
+    font-size: 26px;
+
+   }
+
+   p{
+       font-family: 'Raleway', sans-serif;
+       font-size: 16px;
+       justify-content: center;
+   }
