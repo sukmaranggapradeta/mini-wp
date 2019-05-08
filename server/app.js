@@ -15,7 +15,7 @@ app.use('/articles', articleRoutes)
 
 app.use(errHandling)
 
-mongoose.connect('mongodb://localhost/mini-wp', { useNewUrlParser:true }, (err)=>{
+mongoose.connect(`mongodb+srv://admin:${process.env.ATLAS_PASS}@cluster0miniwp-5nrgs.gcp.mongodb.net/test?retryWrites=true`, { useNewUrlParser:true }, (err)=>{
     if (err) console.log('database not connect')
     else `Database connected`
 })
