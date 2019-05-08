@@ -15,7 +15,10 @@ app.use('/articles', articleRoutes)
 
 app.use(errHandling)
 
-mongoose.connect('mongodb://localhost/mini-wp', { useNewUrlParser:true })
+mongoose.connect('mongodb://localhost/mini-wp', { useNewUrlParser:true }, (err)=>{
+    if (err) console.log('database not connect')
+    else `Database connected`
+})
 
 app.listen(port, ()=>{
     console.log(`server running at port ${port}`)
