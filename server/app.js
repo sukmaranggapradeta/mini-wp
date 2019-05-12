@@ -3,21 +3,34 @@ const app = express()
 const port = process.env.port || 3000
 const cors = require('cors')
 const mongoose = require('mongoose')
+const dotenv = require('dotenv')
+const morgan = require('morgan')
 const articleRoutes = require('./routes/article')
-const errHandling = require('./middlewares/errorHandling')  
+const userRoutes = require('./routes/user')
+const apiRoute = require('./routes/api')
+const errHandling = require('./middlewares/errorHandling')
+
+dotenv.config()
 
 app.use(cors())
+app.use(morgan('dev'))
 
 app.use(express.json())
 app.use(express.urlencoded({ extended:false }))
 
+app.get('/', (req, res)=>{
+    res.send('welcome...')
+})
 app.use('/articles', articleRoutes)
+app.use('/users', userRoutes)
+app.use('/api', apiRoute)
 
 app.use(errHandling)
 
-mongoose.connect(`mongodb+srv://admin:${process.env.ATLAS_PASS}@cluster0miniwp-5nrgs.gcp.mongodb.net/test?retryWrites=true`, { useNewUrlParser:true }, (err)=>{
+// mongoose.connect(`mongodb://localhost/mini-wp`, { useNewUrlParser:true }, (err)=>{
+mongoose.connect(process.env.ATLAS_URI, { useNewUrlParser:true }, (err)=>{
     if (err) console.log('database not connect')
-    else `Database connected`
+    else console.log(`Database connected`)
 })
 
 app.listen(port, ()=>{

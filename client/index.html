@@ -5,196 +5,297 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<!-- include libraries(jQuery, bootstrap) -->
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
         integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/style.css">
     <!-- include libraries(jQuery, bootstrap) -->
-    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+    <!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> -->
+    <!-- <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> -->
     <!-- include summernote css/js -->
-    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.css" rel="stylesheet">
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.js"></script>
+    <!-- <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.css" rel="stylesheet"> -->
+    <!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.js"></script> -->
+    
+    <!-- include summernote css/js -->
+<!-- <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.css" rel="stylesheet"> -->
+<!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.js"></script> -->
+
     <!-- font -->
+
     <link href="https://fonts.googleapis.com/css?family=Monoton" rel="stylesheet" type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Raleway:400, 600' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+
+    <!-- WYSIWYG -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+    <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" /> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script> -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" /> -->
     <!-- development version, includes helpful console warnings -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <!-- <link rel="stylesheet" href="./css/vueWysiwyg.css"> -->
+    <!-- <link rel="stylesheet" href="./css/vueWysiwyg.css"> -->
+    <meta name="google-signin-client_id"
+        content="856869270081-kb2org181cjch32j6t631bc7hf40lggb.apps.googleusercontent.com">
     <title>Mini Wordpress</title>
 </head>
-<div id="app"> 
-<header class="navbar navbar-expand navbar-dark bg-dark flex-column flex-md-row ">
-    <div class="navbar-nav">
-        <ul class="navbar-nav bd-navbar-nav flex-row">
-            <li class="nav-item">
-                <a id="homeBtn" class="nav-link active" href="#!">
-                    <img src="./image/logo.png" alt="Logo">
-                    Home
-                </a>
-            </li>
-            <li class="nav-item">
-                <a @click.prevent="page_reader=true, page_input=false, page_search=false, page_edit=false" id="readerBtn" class="nav-link " href="#!">
-                    <img src="./image/read.png" alt="read">
-                    Reader
-                </a>
-            </li>
-        </ul>
-    </div>
-    <div class="ml-md-auto">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a href="#!" id="write" class="nav-link" @click.prevent="page_input=true, page_search=false, page_reader=false, page_edit=false">
-                    <i class="fas fa-pencil-alt"></i>
-                    Write
-                </a> </li>
-            <li>
-                <a id="myProfileBtn" href="#!" class="nav-link">
-                    <i class="fas fa-portrait"></i>
-                    myPorfile
-                </a>
-            </li>
-            <li>
-                <a href="#!" class="nav-link">
-                    <i class="far fa-bell"></i>
-                    Notif
-                </a>
-            </li>
-            <li>
-                <a href="#!" class="nav-link" @click.prevent="page_input=false, page_reader=false, page_edit=false, page_search=true">
-                    <i class="fa fa-search"></i>
-                    Search
-                </a>
-            </li>
-
-        </ul>
-    </div>
-</header>
 
 <body>
-    <div class="row">
+    <!-- app start -->
+    <div id="app">
+        <!-- login page -->
+        <div class="col" v-show="page_login">
+            <div class="container my-4">
+                <div class="row justify-content-center">
+                    <div class="col-4">
+                        <div class="card mb-4">
+                            <div class="card-header text-center">Login</div>
 
-        <div id="sidebar-wrapper" class="left-sidebar-wrapper bg-dark border col-md-2">
-            <ul class="nav flex-column">
-                <li>
-                    <a href="#!" class="nav-link">
-                        <i class="fas fa-desktop"></i>
-                        View Site
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#!" class="nav-link">
-                        <i class="far fa-chart-bar"></i>
-                        Stats
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href=" #!" class="nav-link">
-                        <i class="fas fa-history"></i>
-                        Activity
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#!" class="nav-link">
-                        <i class="far fa-calendar-check"></i>
-                        Plan
-                    </a>
-                </li>
-                <li>
-                    <a href="#!" class="nav-link">
-                        <i class="fas fa-file-word"></i>
-                        Site Pages
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#!" class="nav-link">
-                        <i class="far fa-image"></i>
-                        Media
-                    </a>
-                </li>
-            </ul>
-        </div>
-
-
-        <div id="sidebar-wrapper" class="col blog-main  ">
-            <!-- search start-->
-            <div id="" class="col-lg-12" v-if="page_search">
-                    <input v-model="title_search" 
-                        class="form-control form-control-sm mr-3 w-75" 
-                        type="text" 
-                        placeholder="Search article" 
-                        name="search">
-                    <i class="fas fa-search" aria-hidden="true"></i>
-                    <div class="blog-post col-lg-12 border" v-for="article in filterTitle">
-                        <div>
-                            <h2>{{ article.title }}</h2>
-                            <p class="blog-post-meta">Published {{ article.created_at }}</p>
-                            <hr>
-                            <p>{{ article.content }}</p>                            
+                            <div class="card-body">
+                                <form method="post">
+                                    <div class="form-group">
+                                        <label for="email">Email address</label>
+                                        <input v-model="email" type="email" class="form-control" id="email"
+                                            aria-describedby="emailHelp" placeholder="Enter email">
+                                        <small id="emailHelp" class="form-text text-muted">
+                                            We'll never share your email with anyone else.
+                                        </small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password">Password</label>
+                                        <input v-model="password" type="password" class="form-control" id="password"
+                                            placeholder="Password">
+                                    </div>
+                                    <button type="submit" @click.prevent="login()"
+                                        class="btn btn-primary">Login</button>
+                                    <p>
+                                        Not a member? <a href="#!" id="btn-register"
+                                            @click.prevent="page_login=false, page_signup=true">Register</a>
+                                    </p>
+                                    <p>Or Sign In with : </p>
+                                    <div class="g-signin2" data-onsuccess="onSignIn" ></div>
+                                </form>
+                            </div>
                         </div>
-                        <button class="btn btn-secondary" @click.prevent="editArtikel(article._id), page_edit=true, page_search=false, page_reader=false">Edit</button>
-                        <button class="btn btn-danger" @click.prevent="deleteArtikel(article._id)">Delete</button>
-                    </div>
-
-            </div>
-            <!-- search end-->    
-
-            <div class="col-lg-11">
-                <!-- input artikel start -->
-                <div class="container-artikel col-lg-12 border" v-if="page_input">
-                    <form method="post">
-                        <br>
-                        <h2>Write Article</h2>
-                        <br>
-                        <input v-model="title" class="form-control" type="text" placeholder="Title..."><br>
-                        <textarea class="form-control" v-model="content" rows="5" placeholder="Description..."></textarea>
-                        <!-- <div id="summernote">Hello Summernote</div> -->
-                        <button class="btn btn-success" @click.prevent="createArtikel()" type="submit">Submit</button>
-                    </form>
-                </div>
-                <!-- input artikel end -->
-
-                <!-- edit artikel start -->
-                <div class="container-artikel col-lg-12 border" v-if="page_edit">
-                    <form method="post">
-                        <br>
-                        <h2> Edit Article</h2>
-                        <br>
-                        <input class="form-control" type="text" v-model="title"><br>
-                        <textarea class="form-control" v-model="content" rows="5" >{{ content }} </textarea>
-                        <!-- <div id="summernote">Hello Summernote</div> -->
-                        <button class="btn btn-success" @click.prevent="updateArtikel(id), page_reader=false, page_search=false, page_edit=true, page_input=false" type="submit">Update</button>
-                    </form>
-                </div>
-                <!-- edit artikel end -->
-
-                <!-- artikel start -->
-                <div id="artikel" class="container-artikel col-lg-12 border" v-if="page_reader">
-                    <div class="blog-post col-lg-12 border" v-for="article in articles">
-                        <div>
-                            <h2>{{ article.title }}</h2>
-                            <p class="blog-post-meta">Published {{ article.created_at }}</p>
-                            <hr>
-                            <p>{{ article.content }}</p>                            
-                        </div>
-                        <button class="btn btn-secondary" @click.prevent="editArtikel(article._id), page_edit=true, page_reader=false">Edit</button>
-                        <button class="btn btn-danger" @click.prevent="deleteArtikel(article._id)">Delete</button>
                     </div>
                 </div>
-                <!-- artikel end -->
             </div>
         </div>
+        <!-- login page end -->
+
+        <!-- SignUp start -->
+        <div class="col" v-show="page_signup">
+            <div class="container my-4">
+                <div class="row justify-content-center">
+                    <div class="col-4">
+                        <div class="card mb-4">
+                            <div class="card-header text-center">Sign up</div>
+
+                            <div class="card-body">
+                                <form method="post">
+                                    <div class="form-group">
+                                        <label for="name">Name</label>
+                                        <input v-model="register_name" type="text" class="form-control" id="register_name"
+                                            placeholder="Name">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="email">Email address</label>
+                                        <input v-model="register_email" type="email" class="form-control" id="register_email"
+                                            aria-describedby="emailHelp" placeholder="Enter email">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password">Password</label>
+                                        <input v-model="register_password" type="password" class="form-control" id="register_password"
+                                            placeholder="Password">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="confirm_password">Confirm Password</label>
+                                        <input v-model="register_confirm_password" type="password" class="form-control"
+                                            id="confirm_password" placeholder="Confirm Password">
+                                    </div>
+
+                                    <button type="submit" @click.prevent="register()" class="btn btn-primary">Sign
+                                        Up</button>
+                                    <p>
+                                        Already have an account? <a href="#!" id="btn-login"
+                                            @click.prevent="page_login=true, page_signup=false">Login</a>
+                                    </p>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- SignUp end -->
+
+        <!-- home page -->
+        <div class="clas" v-if="page_home">
+
+            <header class="navbar navbar-expand navbar-dark bg-dark flex-column flex-md-row ">
+                <div class="navbar-nav">
+                    <ul class="navbar-nav bd-navbar-nav flex-row">
+                        <li class="nav-item">
+                            <a id="homeBtn" class="nav-link active" href="#!">
+                                <img src="./image/logo.png" alt="Logo">
+                                Home
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a @click.prevent="page_reader=true, page_input=false, page_search=false, page_edit=false"
+                                id="readerBtn" class="nav-link " href="#!">
+                                <img src="./image/read.png" alt="read">
+                                Reader
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Logout start -->
+                <div class="ml-md-auto">
+                    <ul class="navbar-nav">
+                        <div id="logout" class="topnav">
+                            <button class="button" style="float:right" onclick="signOut();"><span>Logout
+                            </span></button>
+                        </div>
+                    </ul>
+                </div>
+                <!-- Logout end -->
+            </header>
+
+            <div class="row">
+                <div id="sidebar-wrapper" class="left-sidebar-wrapper bg-dark border col-md-2">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a href="#!" id="write" class="nav-link"
+                                @click.prevent="page_input=true, page_search=false, page_reader=false, page_edit=false">
+                                <i class="fas fa-pencil-alt"></i>
+                                Write
+                            </a> </li>
+                        <li>
+                            <a id="myProfileBtn" href="#!" class="nav-link">
+                                <i class="fas fa-portrait"></i>
+                                myPorfile
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#!" class="nav-link">
+                                <i class="far fa-bell"></i>
+                                Notif
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#!" class="nav-link"
+                                @click.prevent="page_input=false, page_reader=false, page_edit=false, page_search=true">
+                                <i class="fa fa-search"></i>
+                                Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div id="sidebar-wrapper" class="col blog-main  ">
+                    <!-- search start-->
+                    <div id="" class="col-lg-12" v-if="page_search">
+                        <input v-model="title_search" class="form-control form-control-sm mr-3 w-75" type="text"
+                            placeholder="Search article by title" name="search">
+                        <i class="fas fa-search" aria-hidden="true"></i>
+                        <div class="card-deck d-flex justify-content-center">
+                            <div class="col-4" v-for="article in filterTitle">
+
+                                <!-- component -->
+                                <article-card v-bind:article="article"></article-card>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- search end-->
+
+                    <div class="col-lg-11">
+                        <!-- input artikel start -->
+                        <div class="container-artikel col-lg-12 border" v-if="page_input">                            
+                            <!-- <form-add-article v-on:addarticle="submitFile" /> -->
+                            <!-- gagal upload file dalam komponent -->
+                            <form method="post" enctype="multipart/form-data">
+                                <br>
+                                <h2>Write Article</h2>
+                                <br>
+                                <input v-model="title" class="form-control" type="text" placeholder="Title..."><br>
+                                <!-- <wysiwyg v-model="text"></wysiwyg> -->
+                                <textarea class="form-control" v-model="content" rows="5"
+                                    placeholder="Conten Description..."></textarea><br>
+                                    <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>  <br>  
+                                    <button class="btn btn-success" @click.prevent="submitFile()">Post Article</button><br>
+                            </form>
+                    
+
+                        </div>
+                    </div>
+                    <!-- input artikel end -->
+
+                    <!-- edit artikel start -->
+                    <div class="container-artikel col-lg-12 border" v-if="page_edit">
+                        <form method="post">
+                            <br>
+                            <h2> Edit Article</h2>
+                            <br>
+                            <input class="form-control" type="text" v-model="title"><br>
+                            <textarea class="form-control" v-model="content" rows="5">{{ content }} </textarea>
+                            <!-- <div id="summernote">Hello Summernote</div> -->
+                            <button class="btn btn-success"
+                                @click.prevent="updateArtikel(id), page_reader=false, page_search=false, page_edit=true, page_input=false"
+                                type="submit">Update</button>
+                        </form>
+                    </div>
+                    <!-- edit artikel end -->
+
+                    <!-- artikel start -->
+                    <div id="sidebar-wrapper" class="col blog-main  ">
+                        <div id="" class="col-lg-12" v-if="page_reader">
+                            <div class="card-deck d-flex justify-content-center">
+                                <div class="col-4" v-for="article in articles">
+                                    <!-- component -->
+                                    <article-card v-bind:article="article"></article-card>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- artikel end -->
+                </div>
+            </div>
+        </div>
+        <!-- home page end -->
     </div>
-    </div>
-</div>
-    <!-- <script src="./js/main.js"></script> -->
+<script>
+
+</script>
+    <!-- app end -->
     <script src="./js/index.js"></script>
+    <!-- <script src="./js/vueWysiwyg.js"></script> -->
+    <!-- <script src="./js/google.js"></script> -->
+    <script src="./component/articleCard.js"></script>
+    <!-- <script src="./component/writearticle.js"></script> -->
+
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <!-- <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    
+    
 </body>
+<!-- <script src="./js/main.js"></script> -->
 <!-- Footer -->
 <footer class="page-footer font-small bg-dark pt-3">
     <!-- Copyright -->
