@@ -1,4 +1,4 @@
-# Mini - WP
+# Mini - WP http://miniwp.sukmaranggapradeta.com/
 
 ### Register :
 ```sh
