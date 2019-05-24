@@ -13,13 +13,16 @@ Vue.component('form-add-article', {
         wysiwyg: vueWysiwyg.default.component,
       },
     methods: {
-        kirim() {
-        this.$emit('addarticle', this.inputarticle);
-        this.inputarticle = {
-            title: '',
-            content: '',
-            featured_image: '',
-            // text:''
+      deleteArtikel(input){
+        this.$emit.deleteArtikel(input);
+      },
+      kirim() {
+      this.$emit('addarticle', this.inputarticle);
+      this.inputarticle = {
+          title: '',
+          content: '',
+          featured_image: '',
+          // text:''
         }
       },
     //   inputfile(){

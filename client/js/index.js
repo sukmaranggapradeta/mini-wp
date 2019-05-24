@@ -1,71 +1,105 @@
+const myServer = 'http://miniwp-server.sukmaranggapradeta.com'
+{/* <p class="card-text">{{ article.content }}</p> */}
 function onSignIn(googleUser) {
-    console.log('masuk google')
-    // var profile = googleUser.getBasicProfile();
+    // console.log('masuk google')
+    var profile = googleUser.getBasicProfile();
     let token = googleUser.getAuthResponse().id_token;
-    console.log(token, "ini token google")
-    axios({
-        url: 'http://127.0.0.1:3000/api/google',
-        method: 'post',
-        headers:{
-            token: token
-        }
-    })
-    .then(user=>{
-        console.log(user.data)
-        return  axios({
-            url: `http://127.0.0.1:3000/users/findEmail/${user.data.data.email}`,
+    let userEmail = profile.getEmail()
+    let userName = profile.getName()
+    // console.log(userEmail)
+    // console.log(token, "ini token google")
+        axios({
+            url: `${myServer}/users/findEmail/${userEmail}`,
             method: 'get',
         })
         .then(found=>{
-            console.log(user.data)
-            console.log(found, "ini found")
-            if (found === null){
-                console.log('create baru')
+            // console.log(user.data)
+            // console.log(found, "ini found")
+            if (found.data === null){
+                // console.log('create baru')
                 return axios({
-                    url:`http://127.0.0.1:3000/users/register`,
+                    url:`${myServer}/users/register`,
                     method: 'post',
                     data:{
-                        name:user.data.data.name,
-                        email: user.data.data.email,
+                        name: userName,
+                        email: userEmail,
                         password: 'this.password'
                     }
                 })
                 .then(newUser=>{
-                    console.log(newUser, 'userbaru')
-                    localStorage.setItem('token',user.data.token)
-                    localStorage.setItem('id',found.data._id)
-                    localStorage.setItem('name',user.data.data.name)
-                    app.page_home= true
-                    app.page_login=false            
+                    // console.log(newUser, 'userbaru')
+                    axios({
+                        url:`${myServer}/users/login`,
+                        method: 'post',
+                        data:{
+                            email: userEmail,
+                            password: 'this.password'
+                        }
+                    })
+                    .then(user=>{
+                        // console.log(user)
+                        Swal.fire({
+                            type: 'success',
+                            title: `Welcome ${user.data.currentUser.name}`,
+                            showConfirmButton: false,
+                            timer: 1500
+                          })
+                        localStorage.setItem('token',user.data.token)
+                        localStorage.setItem('id',user.data.currentUser.userId)
+                        localStorage.setItem('name',user.data.currentUser.name)
+                        app.page_home=true
+                        app.page_login=false 
+                    })
+                    .catch(err=>{
+                        console.log(err)
+                    })             
                 })
             }else{
-                console.log('sudah ada')
-                console.log(user.data.token)
+                // console.log('sudah ada')
+                axios({
+                    url:`${myServer}/users/login`,
+                    method: 'post',
+                    data:{
+                        email: userEmail,
+                        password: 'this.password'
+                    }
+                })
+                .then(user=>{
+                    // console.log(user)
+                    // Swal.fire({
+                    //     type: 'success',
+                    //     title: `Welcome ${user.data.currentUser.name}`,
+                    //     showConfirmButton: false,
+                    //     timer: 1500
+                    //   })
                     localStorage.setItem('token',user.data.token)
-                    localStorage.setItem('id',found.data._id)
-                    localStorage.setItem('name',user.data.data.name)
-                app.page_home=true
-                app.page_login=false            
+                    localStorage.setItem('id',user.data.currentUser.userId)
+                    localStorage.setItem('name',user.data.currentUser.name)
+                    app.page_home=true
+                    app.page_login=false 
+                })
+                .catch(err=>{
+                    console.log(err)
+                })                               
             }
         })
-    })
-    .catch(err=>{
-        console.log(err)
-    })
+        .catch(err=>{
+            console.log(err)
+        })
 
   }
 
   function signOut() {
     var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(function () {
-      console.log('User signed out.');
+    //   console.log('User signed out.');
       app.page_home = false
         app.page_login = true
-        localStorage.removeItem('token')
-        localStorage.removeItem('id')
-        localStorage.removeItem('name')
+        // localStorage.removeItem('token')
+        // localStorage.removeItem('id')
+        // localStorage.removeItem('name')
         // localStorage.removeItem('email')
-        app.logout()
+        // app.logout()
     });
   }
 
@@ -100,14 +134,14 @@ var app = new Vue({
     methods: {
         handleFileUpload(){
             this.file = this.$refs.file.files[0];
-            console.log(this.file)
+            // console.log(this.file)
         },
         submitFile(){
             let formData = new FormData();
             formData.append('image', this.file);
-            console.log(formData)
+            // console.log(formData)
 
-            axios.post( 'http://localhost:3000/articles/upload',
+            axios.post( `${myServer}/articles/upload`,
             formData,
             {
             headers: {
@@ -115,9 +149,9 @@ var app = new Vue({
             }
             }
                 ).then((data)=>{
-                    console.log(data.data);
+                    // console.log(data.data);
                     return axios({
-                        url: 'http://localhost:3000/articles',
+                        url: `${myServer}/articles`,
                         // url: 'http://localhost:3000/articles/upload',
                         method: 'post',
                         data:{
@@ -150,7 +184,7 @@ var app = new Vue({
          
                 })
                 .catch(function(){
-                    console.log('FAILURE!!');
+                    // console.log('FAILURE!!');
                     Swal.fire({
                         title: 'Error!',
                         text: 'Connection Error!',
@@ -161,17 +195,17 @@ var app = new Vue({
         },
         register(){
             if (this.register_password === this.register_confirm_password){
-                console.log('cari email')
-                console.log(this.register_email)
+                // console.log('cari email')
+                // console.log(this.register_email)
                 axios({
-                    url: `http://127.0.0.1:3000/users/findEmail/${this.register_email}`,
+                    url: `${myServer}/users/findEmail/${this.register_email}`,
                     method: 'get',
                 })
                 .then(found=>{
-                    console.log(found.data)
+                    // console.log(found.data)
                     if (found.data == null){
                         axios({
-                            url:`http://127.0.0.1:3000/users/register`,
+                            url:`${myServer}/users/register`,
                             method: 'post',
                             data:{
                                 name:this.register_name,
@@ -180,7 +214,7 @@ var app = new Vue({
                             }
                         })
                         .then(newUser=>{
-                            console.log(newUser)
+                            // console.log(newUser)
                             Swal.fire({
                                 type: 'success',
                                 title: 'Register success.',
@@ -194,7 +228,7 @@ var app = new Vue({
                             this.register_confirm_password=''
                         })
                         .catch(err=>{
-                            console.log(err)
+                            // console.log(err)
                             Swal.fire({
                                 title: 'Error!',
                                 text: 'Connection Error!',
@@ -212,7 +246,7 @@ var app = new Vue({
                     }
                 })
                 .catch(err=>{
-                    console.log(err)
+                    // console.log(err)
                     Swal.fire({
                         title: 'Error!',
                         text: 'Connection Error!',
@@ -231,7 +265,7 @@ var app = new Vue({
         },
         login(){
             axios({
-                url:`http://localhost:3000/users/login`,
+                url:`${myServer}/users/login`,
                 method: 'post',
                 data:{
                     email: this.email,
@@ -239,7 +273,7 @@ var app = new Vue({
                 }
             })
             .then(user=>{
-                console.log(user)
+                // console.log(user)
                 Swal.fire({
                     type: 'success',
                     title: `Welcome ${user.data.currentUser.name}`,
@@ -252,7 +286,7 @@ var app = new Vue({
                 this.isLogin()
             })
             .catch(err=>{
-                console.log(err)
+                // console.log(err)
                 Swal.fire({
                     title: 'Email/Password wrong!',
                     text: 'Please input the correct email and password',
@@ -262,8 +296,8 @@ var app = new Vue({
             })
         },
         logout(){
-            // signOut()
-            console.log('keluar')
+            signOut()
+            // console.log('keluar')
             // gapi.signin2.render('my-signin2', {
             //     'scope': 'profile email',
             //     'width': 140,
@@ -308,7 +342,7 @@ var app = new Vue({
         // },
         cariArtikel(){
             axios({
-                url: `http://localhost:3000/articles?title=${this.title_search}`,
+                url: `${myServer}/articles?title=${this.title_search}`,
                 method: 'get',
                 headers:{
                     token: localStorage.getItem('token')
@@ -333,7 +367,7 @@ var app = new Vue({
         // },
         createArtikel(){
             axios({
-                url: 'http://localhost:3000/articles',
+                url: `${myServer}/articles`,
                 // url: 'http://localhost:3000/articles/upload',
                 method: 'post',
                 data:{
@@ -383,9 +417,9 @@ var app = new Vue({
                 confirmButtonText: 'Yes, delete it!'
               }).then((result) => {
                 if (result.value) {
-                    console.log(input,' ini input')
+                    // console.log(input,' ini input')
                     axios({
-                        url:`http://localhost:3000/articles/${input}`,
+                        url:`${myServer}/articles/${input}`,
                         method: 'get',
                         headers:{
                             token: localStorage.getItem('token')
@@ -395,14 +429,14 @@ var app = new Vue({
                         if (article.data.author._id === localStorage.getItem('id')){
                             // console.log(article)
                             axios({
-                                url: `http://localhost:3000/articles/${input}`,
+                                url: `${myServer}/articles/${input}`,
                                 method: 'delete',
                                 headers:{
                                     token: localStorage.getItem('token')
                                 }
                             })
                             .then(response=>{
-                                console.log(response, `ini response client`)
+                                // console.log(response, `ini response client`)
                                 this.articles = this.articles.filter(el=>{
                                     if(el._id !== input) return el
                                 })
@@ -433,9 +467,9 @@ var app = new Vue({
               })
         },
         editArtikel(input){
-            console.log(input)
+            // console.log(input)
             axios({
-                url: `http://localhost:3000/articles/${input}`,
+                url: `${myServer}/articles/${input}`,
                 method: 'get',
                 headers:{
                     token: localStorage.getItem('token')
@@ -444,7 +478,7 @@ var app = new Vue({
             })
             .then(article=>{
                 if (article.data.author._id === localStorage.getItem('id')){
-                    console.log(article.data)
+                    // console.log(article.data)
                     this.title = article.data.title,
                     this.content = article.data.content
                     this.id = article.data._id
@@ -461,7 +495,7 @@ var app = new Vue({
                 }
             })
             .catch(err=>{
-                console.log(err)
+                // console.log(err)
                 swal({
                     title: "ERROR!",
                     text: `${err.message}`,
@@ -472,7 +506,7 @@ var app = new Vue({
         },
         updateArtikel(id){
             axios({
-                url: `http://localhost:3000/articles/${id}`,
+                url: `${myServer}/articles/${id}`,
                 method: 'put',
                 data:{
                     title:this.title,
@@ -499,7 +533,7 @@ var app = new Vue({
                 })
             })
             .catch(err=>{
-                console.log(err)
+                // console.log(err)
                 swal({
                     title: "ERROR!",
                     text: `${err.message}`,
@@ -531,7 +565,9 @@ var app = new Vue({
     computed: {
         filterTitle:function(){
             return this.articles.filter((article)=>{
-                return article.title.match(this.title_search)
+                return article.title
+                .toLowerCase()
+                .match(this.title_search.toLowerCase())
             })
         }
     },
@@ -540,7 +576,7 @@ var app = new Vue({
         // $('#summernote').summernote();
         // console.log('click get article')
         axios({
-            url: 'http://localhost:3000/articles',
+            url: `${myServer}/articles`,
             method: 'get',
         })
         .then(respoonse=>{

@@ -14,7 +14,7 @@ class oauthController{
         .then((ticket)=>{
             console.log('masuk tiket paylod ==========', ticket.payload)
             const {name, email} = ticket.getPayload()
-            const myToken = jwt.sign({name ,email } , process.env.GOOGLE_CLIENT_ID, {expiresIn: '1 day'})
+            const myToken = jwt.sign({name ,email } , process.env.JWT_SECRET, {expiresIn: '1 day'})
             res.status(200).json({
                 token: myToken,
                 message: 'ini generate token',

@@ -26,8 +26,6 @@
 <!-- <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.css" rel="stylesheet"> -->
 <!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.11/summernote.js"></script> -->
 
-    <!-- font -->
-
     <link href="https://fonts.googleapis.com/css?family=Monoton" rel="stylesheet" type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Raleway:400, 600' rel='stylesheet' type='text/css'>
 
@@ -43,7 +41,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-    <!-- <link rel="stylesheet" href="./css/vueWysiwyg.css"> -->
+
     <!-- <link rel="stylesheet" href="./css/vueWysiwyg.css"> -->
     <meta name="google-signin-client_id"
         content="856869270081-kb2org181cjch32j6t631bc7hf40lggb.apps.googleusercontent.com">
@@ -167,7 +165,7 @@
                 <div class="ml-md-auto">
                     <ul class="navbar-nav">
                         <div id="logout" class="topnav">
-                            <button class="button" style="float:right" onclick="signOut();"><span>Logout
+                            <button class="button" style="float:right" @click.prevent="logout()"><span>Logout
                             </span></button>
                         </div>
                     </ul>

@@ -5,7 +5,6 @@ function createAccessToken(user){
 }
 
 function verifyAccessToken(token){
-    console.log(token, '--------------------------tokem')
     return jwt.verify(token, process.env.JWT_SECRET)
 }
 
